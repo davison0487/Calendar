@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
         
     ECE141::TestAutomatic theTests;
     
-    srand(static_cast<uint>(time(0)));
+    srand(static_cast<unsigned int>(time(0)));
 
     std::string temp(argv[1]);
     //temp="compile";

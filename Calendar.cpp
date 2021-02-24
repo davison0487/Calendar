@@ -19,13 +19,41 @@ namespace ECE141 {
   }
 
   bool Calendar::addEvent(Event *anEvent) {
-    //STUDENT: Add code to save event in calendar...
-    return true;
+      if (findEvent(anEvent) != nullptr) {
+          std::cerr << "Event already exist!\n";
+          return false;
+      }
+      events.push_back(anEvent);
+      return true;
   }
 
   bool Calendar::removeEvent(Event *anEvent) {
-    //STUDENT: Add code to remove event from calendar...
-    return true;
+      for (int i = 0; i < events.size(); ++i) {
+          if (anEvent->title == events[i]->title &&
+              anEvent->date  == events[i]->date  &&
+              anEvent->time  == events[i]->time  &&
+              anEvent->with  == events[i]->with) {
+              auto* toBeDelete = events[i];
+              events.erase(events.begin() + i);
+              delete toBeDelete;
+              return true;
+          }
+      }
+      std::cerr << "Event not found!\n";
+      return false;
   }
+
+  Event* Calendar::findEvent(Event* anEvent) {
+      for (int i = 0; i < events.size(); ++i) {
+          if (anEvent->title == events[i]->title &&
+              anEvent->date == events[i]->date &&
+              anEvent->time == events[i]->time &&
+              anEvent->with == events[i]->with) {              
+              return events[i];
+          }
+      }
+      std::cerr << "Event not found!\n";
+      return nullptr;
+  };
 
 }

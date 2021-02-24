@@ -64,9 +64,9 @@ namespace ECE141 {
     
     bool addEvent(Event *anEvent);
     bool removeEvent(Event *anEvent);
-    
+        
     //------ STUDENT: Add what you want here...
-
+    Event* findEvent(Event* anEvent);
     
     //-----------------------------------------
         
