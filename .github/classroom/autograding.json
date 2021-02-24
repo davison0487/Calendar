@@ -1,0 +1,64 @@
+{
+  "tests": [
+    {
+      "name": "Compile test",
+      "setup": "make",
+      "run": "./hw4 compile ",
+      "input": "",
+      "output": "Compile test PASS",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 5
+    },
+    {
+      "name": "Add test",
+      "setup": "make",
+      "run": "./hw4 add ",
+      "input": "",
+      "output": "Add test PASS",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 15
+    },
+    {
+      "name": "Change test",
+      "setup": "make",
+      "run": "./hw4 change",
+      "input": "",
+      "output": "Change test PASS",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 15
+    },
+    {
+      "name": "Delete test",
+      "setup": "make",
+      "run": "./hw4 delete",
+      "input": "",
+      "output": "Delete test PASS",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    },
+    {
+      "name": "Show test",
+      "setup": "make",
+      "run": "./hw4 show",
+      "input": "",
+      "output": "Show test PASS",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Stress test",
+      "setup": "make",
+      "run": "./hw4 stress",
+      "input": "",
+      "output": "Stress test PASS",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 40
+    }
+  ]
+}
