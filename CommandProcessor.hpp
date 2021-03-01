@@ -18,8 +18,8 @@ namespace ECE141 {
   //make subclasses for your own commands...
   class CommandProcessor  {
   public:
-                      CommandProcessor(CommandProcessor *aNext=nullptr);
-              virtual ~CommandProcessor();
+      CommandProcessor(CommandProcessor *aNext=nullptr);
+      virtual ~CommandProcessor();
     
     //return ptr to self if you can handle command; or let next try...
     CommandProcessor* findHandler(Tokenizer &aTokenizer); //general...

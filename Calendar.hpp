@@ -22,7 +22,7 @@ namespace ECE141 {
           const std::string &aDate="2021-01-01",
           const std::string &aTime="09:00am",
           const std::string &aPerson="")
-      : title(aTitle), date(aPerson), time(aTime), with(aPerson) {
+      : title(aTitle), date(aDate), time(aTime), with(aPerson) {
         ++leaks;
       }
     

@@ -9,17 +9,28 @@
 #define Command_hpp
 
 #include <stdio.h>
+#include <string>
 
 namespace ECE141 {
-
-  //Store cmd-related information in this object..
-  //Make any changes you want...
-
-  class Command {
-  public:
     
-    Command(); //this is a placeholder; change at will...
-  };
+    //Store cmd-related information in this object..
+    //Make any changes you want...
+
+    enum class commandType {Add, Change, Delete, Show, Quit};
+    
+    class Command {
+    public:
+        Command() {};
+        Command(const std::string& aTitle,
+                const std::string& aDate,
+                const std::string& aTime,
+                const std::string& aPerson);
+    
+        std::string title;
+        std::string date;
+        std::string time;
+        std::string with;
+    };
 
 }
 

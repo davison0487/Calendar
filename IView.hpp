@@ -10,12 +10,21 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
 
 namespace ECE141 {
     
   class IView {
   public:
     virtual void show(std::ostream &anOutput)=0;
+  };
+
+  class View : public IView {
+  public:
+      virtual void show(std::ostream& anOutput) {
+         
+      };
+
   };
 
 }

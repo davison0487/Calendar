@@ -34,29 +34,30 @@ int main(int argc, const char * argv[]) {
 
     std::string temp(argv[1]);
     //temp="compile";
-    
-    if("compile"==temp) {
-      std::cout << "Compile test " << theStatus[theTests.doCompileTest()] << ".\n";
-    }
-    else if("add"==temp) {
-      std::cout << "Add test "
-        << theStatus[theTests.doAddTest()] << ".\n";
-    }
-    else if ("change"==temp) {
-      std::cout << "Change test "
-        << theStatus[theTests.doChangeTest()] << ".\n";
-    }
-    else if ("delete"==temp) {
-      std::cout << "Delete test "
-        << theStatus[theTests.doDeleteTest()] << ".\n";
-    }
-    else if ("show"==temp) {
-      std::cout << "Show test "
-        << theStatus[theTests.doShowTest()] << ".\n";
-    }    
-    else if ("stress"==temp) {
-      std::cout << "Stress test "
-        << theStatus[theTests.doStressTest()] << ".\n";
+    for (int i = 0; i < 100; ++i) {
+        if ("compile" == temp) {
+            std::cout << "Compile test " << theStatus[theTests.doCompileTest()] << ".\n";
+        }
+        else if ("add" == temp) {
+            std::cout << "Add test "
+                << theStatus[theTests.doAddTest()] << ".\n";
+        }
+        else if ("change" == temp) {
+            std::cout << "Change test "
+                << theStatus[theTests.doChangeTest()] << ".\n";
+        }
+        else if ("delete" == temp) {
+            std::cout << "Delete test "
+                << theStatus[theTests.doDeleteTest()] << ".\n";
+        }
+        else if ("show" == temp) {
+            std::cout << "Show test "
+                << theStatus[theTests.doShowTest()] << ".\n";
+        }
+        else if ("stress" == temp) {
+            std::cout << "Stress test "
+                << theStatus[theTests.doStressTest()] << ".\n";
+        }
     }
 
   }

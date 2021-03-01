@@ -16,7 +16,8 @@ namespace ECE141 {
   QuitProcessor::~QuitProcessor() {}
 
   bool QuitProcessor::recognizes(Tokenizer &aTokenizer) {
-    return aTokenizer.skipTo(Keywords::quit_kw);
+      aTokenizer.restart();
+      return aTokenizer.skipTo(Keywords::quit_kw);
   }
 
   Command* QuitProcessor::makeCommand(Tokenizer &aTokenizer) {

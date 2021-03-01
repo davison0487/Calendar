@@ -9,7 +9,10 @@
 
 namespace ECE141 {
 
-  Command::Command() {
-  }
+    Command::Command(const std::string& aTitle,
+                     const std::string& aDate,
+                     const std::string& aTime,
+                     const std::string& aPerson) :
+        title(aTitle), date(aDate), time(aTime), with(aPerson) {};
 
 }

@@ -30,7 +30,7 @@ namespace ECE141 {
     {"create", Keywords::create_kw},
     {"delete", Keywords::delete_kw},
     {"if", Keywords::if_kw},
-    {"it", Keywords::if_kw},
+    {"it", Keywords::it_kw},
     {"on", Keywords::on_kw},
     {"quit", Keywords::quit_kw},
     {"show", Keywords::show_kw},
@@ -72,7 +72,9 @@ namespace ECE141 {
   //-----------------------------------------------------
 
   Tokenizer::Tokenizer(std::istream &anInput)
-    : Parser(anInput), index(0)  {}
+    : Parser(anInput), index(0)  {
+      skipWhile(isWhitespace);
+  }
 
   Token& Tokenizer::tokenAt(size_t anOffset) {
     if(anOffset>=0 && anOffset<tokens.size()) {

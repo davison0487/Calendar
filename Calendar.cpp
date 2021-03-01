@@ -13,6 +13,9 @@ namespace ECE141 {
     : stream(aStream) {}
 
   Calendar::~Calendar() {
+      for (auto* event : events)
+          delete event;
+
     if(Event::leaks) {
       std::cout << "(" << Event::leaks << " events leaked) ";
     }
@@ -29,17 +32,14 @@ namespace ECE141 {
 
   bool Calendar::removeEvent(Event *anEvent) {
       for (int i = 0; i < events.size(); ++i) {
-          if (anEvent->title == events[i]->title &&
-              anEvent->date  == events[i]->date  &&
-              anEvent->time  == events[i]->time  &&
-              anEvent->with  == events[i]->with) {
+          if (events[i] == anEvent) {
               auto* toBeDelete = events[i];
               events.erase(events.begin() + i);
               delete toBeDelete;
               return true;
           }
       }
-      std::cerr << "Event not found!\n";
+      //std::cerr << "Event not found!\n";
       return false;
   }
 
@@ -52,7 +52,7 @@ namespace ECE141 {
               return events[i];
           }
       }
-      std::cerr << "Event not found!\n";
+      //std::cerr << "Event not found!\n";
       return nullptr;
   };
 
