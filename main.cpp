@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
 
     std::string temp(argv[1]);
     //temp="compile";
-    for (int i = 0; i < 100; ++i) {
+    //for (int i = 0; i < 100; ++i) {
         if ("compile" == temp) {
             std::cout << "Compile test " << theStatus[theTests.doCompileTest()] << ".\n";
         }
@@ -58,7 +58,7 @@ int main(int argc, const char * argv[]) {
             std::cout << "Stress test "
                 << theStatus[theTests.doStressTest()] << ".\n";
         }
-    }
+    //}
 
   }
   else {

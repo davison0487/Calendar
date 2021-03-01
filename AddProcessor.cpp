@@ -99,7 +99,7 @@ namespace ECE141 {
       if (!aCal.addEvent(newEvent))
           delete newEvent;
 
-      std::cout << "Event added\n";
+      //std::cout << "Event added\n";
       return kNoError;
   }
 
