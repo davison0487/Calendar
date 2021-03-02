@@ -25,11 +25,26 @@ namespace ECE141 {
                 const std::string& aDate,
                 const std::string& aTime,
                 const std::string& aPerson);
+
+        //command constructor for change processor
+        Command(const std::string& aTitle,
+                const std::string& aDate,
+                const std::string& aTime,
+                const std::string& aPerson,
+                const std::string& aNewTitle,
+                const std::string& aNewDate,
+                const std::string& aNewTime,
+                const std::string& aNewPerson);
     
         std::string title;
         std::string date;
         std::string time;
         std::string with;
+
+        std::string newTitle;
+        std::string newDate;
+        std::string newTime;
+        std::string newWith;
     };
 
 }

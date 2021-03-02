@@ -44,11 +44,16 @@ namespace ECE141 {
               aTokenizer.next();
               if (aTokenizer.current().type == TokenType::timedate) {
                   time = aTokenizer.current().data;
+                  if (time.size() != 7)
+                      time = '0' + time;
                   aTokenizer.next();
                   if (aTokenizer.more() && aTokenizer.current().keyword == Keywords::until_kw) {
                       aTokenizer.next();
-                      if (aTokenizer.current().type == TokenType::timedate) {                          
-                          time += "-" + aTokenizer.current().data;
+                      if (aTokenizer.current().type == TokenType::timedate) {
+                          std::string endTime = aTokenizer.current().data;
+                          if(endTime.size() != 7)
+                              endTime = '0' + endTime;
+                          time += "-" + endTime;
                           aTokenizer.next();
                       }
                   }
@@ -74,10 +79,12 @@ namespace ECE141 {
 
           case (int)Keywords::with_kw: {
               aTokenizer.next();
-              if (aTokenizer.current().type == TokenType::string) {
-                  with = aTokenizer.current().data;
+              if (aTokenizer.current().type != TokenType::string) {
+                  //is a '='
                   aTokenizer.next();
               }
+              with = aTokenizer.current().data;
+              aTokenizer.next();
               break;
           }
 

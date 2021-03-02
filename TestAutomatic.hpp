@@ -202,7 +202,6 @@ namespace ECE141 {
       {
         Calendar theCal(std::cout); //for testing ...
         if(addTestEvents(theCal)) {
-
           const char *theInput= "change \"Interview\" time=2:00pm";
                   
           std::stringstream theStream(theInput);
@@ -288,6 +287,8 @@ namespace ECE141 {
           }
         }
         theResult=theCount==3;
+        if (!theResult)
+            std::cout << theStream.str();
       }
       return theResult;
     }

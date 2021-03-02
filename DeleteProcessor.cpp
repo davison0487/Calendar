@@ -30,8 +30,8 @@ namespace ECE141 {
       std::map<std::string, std::string*> idMap{ {"title", &title}, {"date", &date}, {"time", &time}, {"with", &with} };
 
       aTokenizer.restart();
-
       while (aTokenizer.more()) {
+          //std::cout << "here";
           int curKeyWord = (int)aTokenizer.current().keyword;
 
           switch (curKeyWord) {
@@ -42,11 +42,52 @@ namespace ECE141 {
                   if (aTokenizer.current().type == TokenType::punctuation) {
                       //expecting a '='
                       aTokenizer.next();
-                      if (aTokenizer.current().type == TokenType::string) {
-                          *idMap[id] = aTokenizer.current().data;
+                      *idMap[id] = aTokenizer.current().data;
+                      aTokenizer.next();
+                      if (aTokenizer.more() && aTokenizer.current().type == TokenType::timedate) {
+                          if (id == "date") {
+                              *idMap[id] += ' ' + aTokenizer.current().data;
+                          }
+                          else {
+                              std::string endTime = aTokenizer.current().data;
+                              if (endTime.size() != 7)
+                                  endTime = '0' + endTime;
+                              *idMap[id] += '-' + endTime;
+                          }
                           aTokenizer.next();
                       }
                   }
+              }
+              break;
+          }
+
+          case (int)Keywords::date_kw: {
+              aTokenizer.next();
+              //expecting a '='
+              aTokenizer.next();
+              date = aTokenizer.current().data;
+              aTokenizer.next();
+              if (aTokenizer.more() && aTokenizer.current().type == TokenType::timedate) {
+                  date += ' ' + aTokenizer.current().data;
+                  aTokenizer.next();
+              }
+              break;
+          }
+
+          case (int)Keywords::time_kw: {
+              aTokenizer.next();
+              //expecting a '='
+              aTokenizer.next();
+              time = aTokenizer.current().data;
+              if (time.size() != 7)
+                  time = '0' + time;
+              aTokenizer.next();
+              if (aTokenizer.more() && aTokenizer.current().type == TokenType::timedate) {
+                  std::string endTime = aTokenizer.current().data;
+                  if (endTime.size() != 7)
+                      endTime = '0' + endTime;
+                  time += '-' + endTime;
+                  aTokenizer.next();
               }
               break;
           }
@@ -85,10 +126,12 @@ namespace ECE141 {
 
           case (int)Keywords::with_kw: {
               aTokenizer.next();
-              if (aTokenizer.current().type == TokenType::string) {
-                  with = aTokenizer.current().data;
+              if (aTokenizer.current().type != TokenType::string) {
+                  //is a '='
                   aTokenizer.next();
               }
+              with = aTokenizer.current().data;
+              aTokenizer.next();
               break;
           }
 
@@ -108,12 +151,13 @@ namespace ECE141 {
           if (aCommand->with != "" && aCommand->with != event->with) {
               continue;
           }
-          else if (aCommand->title != "" && aCommand->title != event->title) {
+          
+          if (aCommand->title != "" && aCommand->title != event->title) {
               continue;
           }
-          else if (aCommand->time != "") {
-              int endTime = 0;
-              int eventEndTime = 0;
+
+          if (aCommand->time != "") {
+              int endTime = 0, eventEndTime = 0;
 
               int startTime = stoi(aCommand->time.substr(0, 2)) * 100 + stoi(aCommand->time.substr(3, 2));
               if (aCommand->time.substr(5, 2) == "pm")
@@ -140,7 +184,8 @@ namespace ECE141 {
               if (eventEndTime < startTime || eventStartTime > endTime)
                   continue;
           }
-          else if (aCommand->date != "") {
+          
+          if (aCommand->date != "") {
               int endDate = 0, eventEndDate = 0;
 
               int startDate = stoi(aCommand->date.substr(5, 2))*100 + stoi(aCommand->date.substr(8, 2));
