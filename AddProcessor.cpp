@@ -69,7 +69,7 @@ namespace ECE141 {
                   if (aTokenizer.more() && aTokenizer.current().keyword == Keywords::until_kw) {                      
                       aTokenizer.next();
                       if (aTokenizer.current().type == TokenType::timedate) {
-                          date += " " + aTokenizer.current().data;
+                          date += "-" + aTokenizer.current().data;
                           aTokenizer.next();                          
                       }
                   }

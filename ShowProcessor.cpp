@@ -120,50 +120,22 @@ namespace ECE141 {
           }
 
           if (aCommand->date != "") {
-              int endDate = 0, eventEndDate = 0;
-
-              int startDate = stoi(aCommand->date.substr(5, 2)) * 100 + stoi(aCommand->date.substr(8, 2));
-              if (aCommand->date.size() > 11)
-                  endDate = stoi(aCommand->date.substr(16, 2)) * 100 + stoi(aCommand->date.substr(19, 2));
-              else
-                  endDate = startDate;
-
-              int eventStartDate = stoi(event->date.substr(5, 2)) * 100 + stoi(event->date.substr(8, 2));
-              if (event->date.size() > 11)
-                  eventEndDate = stoi(event->date.substr(16, 2)) * 100 + stoi(event->date.substr(19, 2));
-              else
-                  eventEndDate = eventStartDate;
-
-              if (eventStartDate > endDate || eventEndDate < startDate)
+              if (aCommand->date.substr(5, 2) != event->date.substr(5, 2))
                   continue;
+              else {
+                  int eventStartDay = std::stoi(event->date.substr(8, 2));
+                  int eventEndDay = std::stoi(event->date.substr(event->date.find_last_of("-") + 1, 2));
+
+                  int startDay = std::stoi(aCommand->date.substr(8, 2));
+                  int endDay = std::stoi(aCommand->date.substr(aCommand->date.find_last_of("-") + 1, 2));
+
+                  if (eventStartDay > endDay && eventEndDay < startDay)
+                      continue;
+              }
           }
 
           if (aCommand->time != "") {
-              int endTime = 0, eventEndTime = 0;
-
-              int startTime = stoi(aCommand->time.substr(0, 2)) * 100 + stoi(aCommand->time.substr(3, 2));
-              if (aCommand->time.substr(5, 2) == "pm")
-                  startTime += 1200;
-              if (aCommand->time.size() > 8) {
-                  endTime = stoi(aCommand->time.substr(8, 2)) * 100 + stoi(aCommand->time.substr(11, 2));
-                  if (aCommand->time.substr(13, 2) == "pm")
-                      endTime += 1200;
-              }
-              else
-                  endTime = startTime;
-
-              int eventStartTime = stoi(event->time.substr(0, 2)) * 100 + stoi(event->time.substr(3, 2));
-              if (event->time.substr(5, 2) == "pm")
-                  eventStartTime += 1200;
-              if (event->time.size() > 8) {
-                  eventEndTime = stoi(event->time.substr(8, 2)) * 100 + stoi(event->time.substr(11, 2));
-                  if (event->time.substr(13, 2) == "pm")
-                      eventEndTime += 1200;
-              }
-              else
-                  eventEndTime = eventStartTime;
-
-              if (eventEndTime < startTime || eventStartTime > endTime)
+              if (aCommand->time != event->time)
                   continue;
           }
 
@@ -175,26 +147,22 @@ namespace ECE141 {
       }
       else {
           aCal.getStream()
-              << "|---------------|---------------|-------------------|-------------------|\n"
-              << "| Title         | Date          | Time              | With              |\n"
-              << "|---------------|---------------|-------------------|-------------------|\n";
+              << "|--------------------|-----------------------|-----------------|-----------------|\n"
+              << "| Title              | Date                  | Time            | With            |\n"
+              << "|--------------------|-----------------------|-----------------|-----------------|\n";
 
           for (auto eventVec : matchEvents) {
               for (auto event : eventVec.second) {
                   aCal.getStream()
-                      << "| " << std::setw(14) << std::left << event->title;
-                  if (aCommand->date != "")
-                      aCal.getStream() << "| " << std::setw(14) << std::left << aCommand->date.substr(0, 10);
-                  else
-                      aCal.getStream() << "| " << std::setw(14) << std::left << event->date;
-                  aCal.getStream()
-                      << "| " << std::setw(18) << std::left << event->time
-                      << "| " << std::setw(18) << std::left << event->with << "|\n";
+                      << "| " << std::setw(19) << std::left << event->title
+                      << "| " << std::setw(22) << std::left << event->date
+                      << "| " << std::setw(16) << std::left << event->time
+                      << "| " << std::setw(16) << std::left << event->with << "|\n";
               }
               
           }
           aCal.getStream()
-              << "|---------------|---------------|-------------------|-------------------|\n";
+              << "|--------------------|-----------------------|-----------------|-----------------|\n";
 
       }
 

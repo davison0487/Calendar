@@ -116,7 +116,7 @@ namespace ECE141 {
                   if (aTokenizer.more() && aTokenizer.current().keyword != Keywords::until_kw) {
                       aTokenizer.next();
                       if (aTokenizer.current().type == TokenType::timedate) {
-                          date += " " + aTokenizer.current().data;
+                          date += "-" + aTokenizer.current().data;
                           aTokenizer.next();
                       }
                   }
@@ -157,101 +157,30 @@ namespace ECE141 {
           }
 
           if (aCommand->time != "") {
-              int endTime = 0, eventEndTime = 0;
+              int startTime = std::stoi(event->time.substr(0, event->time.find_first_of(":"))) * 100 +
+                  std::stoi(event->time.substr(event->time.find_first_of(":") + 1, 2));
+              int endTime = startTime;
 
-              int startTime = stoi(aCommand->time.substr(0, 2)) * 100 + stoi(aCommand->time.substr(3, 2));
-              if (aCommand->time.substr(5, 2) == "pm")
-                  startTime += 1200;
-              if (aCommand->time.size() > 8) {
-                  endTime = stoi(aCommand->time.substr(8, 2)) * 100 + stoi(aCommand->time.substr(11, 2));
-                  if (aCommand->time.substr(13, 2) == "pm")
-                      endTime += 1200;
-              }
-              else 
-                  endTime = startTime;
-
-              int eventStartTime = stoi(event->time.substr(0, 2)) * 100 + stoi(event->time.substr(3, 2));
-              if (event->time.substr(5, 2) == "pm")
-                  eventStartTime += 1200;
-              if (event->time.size() > 8) {
-                  eventEndTime = stoi(event->time.substr(8, 2)) * 100 + stoi(event->time.substr(11, 2));
-                  if (event->time.substr(13, 2) == "pm")
-                      eventEndTime += 1200;
-              }
-              else
-                  eventEndTime = eventStartTime;
+              int eventStartTime = std::stoi(aCommand->time.substr(0, aCommand->time.find_first_of(":"))) * 100 +
+                  std::stoi(aCommand->time.substr(aCommand->time.find_first_of(":") + 1, 2));
+              int eventEndTime = eventStartTime;
 
               if (eventEndTime < startTime || eventStartTime > endTime)
                   continue;
           }
           
           if (aCommand->date != "") {
-              int endDate = 0, eventEndDate = 0;
-
-              int startDate = stoi(aCommand->date.substr(5, 2))*100 + stoi(aCommand->date.substr(8, 2));
-              if (aCommand->date.size() > 11)
-                  endDate = stoi(aCommand->date.substr(16, 2)) * 100 + stoi(aCommand->date.substr(19, 2));              
-              else
-                  endDate = startDate;
-              
-              int eventStartDate = stoi(event->date.substr(5, 2)) * 100 + stoi(event->date.substr(8, 2));
-              if (event->date.size() > 11)
-                  eventEndDate = stoi(event->date.substr(16, 2)) * 100 + stoi(event->date.substr(19, 2));
-              else
-                  eventEndDate = eventStartDate;
-
-              if (eventStartDate > endDate || eventEndDate < startDate)
+              if (aCommand->date.substr(5, 2) != event->date.substr(5, 2))
                   continue;
               else {
-                  if (eventStartDate < startDate) {
-                      if (eventStartDate == startDate - 1) {
-                          std::string newDate = event->date.substr(0, 10);
-                          Event* newEvent = new Event(event->title, newDate, event->time, event->with);
-                          aCal.addEvent(newEvent);
-                      }
-                      else {
-                          std::string newDate = event->date.substr(0, 10) + " 2021-";
-                          --startDate;
+                  /*int eventStartDay = std::stoi(event->date.substr(8, 2));
+                  int eventEndDay = std::stoi(event->date.substr(event->date.find_last_of("-") + 1, 2));
 
-                          if (startDate / 100 < 10)
-                              newDate += '0' + std::to_string(startDate / 100) + '-';
-                          else
-                              newDate += std::to_string(startDate / 100) + '-';
+                  int startDay = std::stoi(aCommand->date.substr(8, 2));
+                  int endDay = std::stoi(aCommand->date.substr(aCommand->date.find_last_of("-") + 1, 2));*/
 
-                          if (startDate % 100 < 10)
-                              newDate += '0' + std::to_string(startDate % 100);
-                          else
-                              newDate += std::to_string(startDate % 100);
-
-                          Event* newEvent = new Event(event->title, newDate, event->time, event->with);
-                          aCal.addEvent(newEvent);
-                      }
-                  }
-                  if (eventEndDate > endDate) {
-                      if (eventEndDate == endDate + 1) {
-                          std::string newDate = "2021-" + std::to_string(eventEndDate/100) + "-" + std::to_string(eventEndDate % 100);
-                          Event* newEvent = new Event(event->title, newDate, event->time, event->with);
-                          aCal.addEvent(newEvent);
-                      }
-                      else {
-                          ++endDate;
-                          std::string newDate = "2021-" + std::to_string(endDate / 100) + "-" + std::to_string(endDate % 100);
-                          
-                          if (endDate / 100 < 10)
-                              newDate += '0' + std::to_string(endDate / 100) + '-';
-                          else
-                              newDate += std::to_string(endDate / 100) + '-';
-
-                          if (endDate % 100 < 10)
-                              newDate += '0' + std::to_string(endDate % 100);
-                          else
-                              newDate += std::to_string(endDate % 100);
-
-                          newDate += " 2021-" + std::to_string(eventEndDate / 100) + "-" + std::to_string(eventEndDate % 100);
-                          Event* newEvent = new Event(event->title, newDate, event->time, event->with);
-                          aCal.addEvent(newEvent);
-                      }
-                  }
+                  if (aCommand->date != event->date)
+                      continue;
               }
           }
           toBeDelete.push_back(event);

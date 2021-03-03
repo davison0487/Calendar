@@ -452,6 +452,7 @@ namespace ECE141 {
               ECE141::ChangeProcessor theProc;
               std::string theStr=theStream.str();
               std::stringstream theInput(theStr);
+              //std::cout << theInput.str() << '\n';
               ECE141::Tokenizer theTokenizer(theInput);
               theTokenizer.tokenize();
               
@@ -502,6 +503,7 @@ namespace ECE141 {
             
       ECE141::DeleteProcessor theProc;
       std::stringstream theStream(anInput);
+      //std::cout << theStream.str() << '\n';
       ECE141::Tokenizer theTokenizer(theStream);
       theTokenizer.tokenize();
       
@@ -589,6 +591,7 @@ namespace ECE141 {
                 {
                   std::string theInput=makeRandomDeleteCmd(theCalendar);
                   if(theInput.size()) {
+                      //std::cout << theInput << '\n';
                     theResult=deleteTestEvent(theCalendar, theInput);
                     if(!theResult) std::cout << "(Delete) ";
                   }

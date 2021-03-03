@@ -334,29 +334,13 @@ namespace ECE141 {
           }
 
           if (aCommand->time != "") {
-              int endTime = 0, eventEndTime = 0;
+              int startTime = std::stoi(event->time.substr(0, event->time.find_first_of(":"))) * 100 +
+                  std::stoi(event->time.substr(event->time.find_first_of(":") + 1, 2));
+              int endTime = startTime;
 
-              int startTime = stoi(aCommand->time.substr(0, 2)) * 100 + stoi(aCommand->time.substr(3, 2));
-              if (aCommand->time.substr(5, 2) == "pm")
-                  startTime += 1200;
-              if (aCommand->time.size() > 8) {
-                  endTime = stoi(aCommand->time.substr(8, 2)) * 100 + stoi(aCommand->time.substr(11, 2));
-                  if (aCommand->time.substr(13, 2) == "pm")
-                      endTime += 1200;
-              }
-              else
-                  endTime = startTime;
-
-              int eventStartTime = stoi(event->time.substr(0, 2)) * 100 + stoi(event->time.substr(3, 2));
-              if (event->time.substr(5, 2) == "pm")
-                  eventStartTime += 1200;
-              if (event->time.size() > 8) {
-                  eventEndTime = stoi(event->time.substr(8, 2)) * 100 + stoi(event->time.substr(11, 2));
-                  if (event->time.substr(13, 2) == "pm")
-                      eventEndTime += 1200;
-              }
-              else
-                  eventEndTime = eventStartTime;
+              int eventStartTime = std::stoi(aCommand->time.substr(0, aCommand->time.find_first_of(":"))) * 100 +
+                  std::stoi(aCommand->time.substr(aCommand->time.find_first_of(":") + 1, 2));
+              int eventEndTime = eventStartTime;
 
               if (eventEndTime < startTime || eventStartTime > endTime)
                   continue;
