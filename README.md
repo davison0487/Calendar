@@ -1,7 +1,4 @@
 # Calendar
-Model/View/Controller (MVC).
-
-
 ## Introduction
 This project we will a Calendar that can store events and people for a single year, 2021. Each event will have a name, a date, a time and an attendee for the event.
 
